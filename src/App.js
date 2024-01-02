@@ -6,23 +6,51 @@ import { Display } from "./Display";
 const data = [
   {
     person: "Rahim",
-    photo: "https://randomuser.me/api/portraits/men/7.jpg",
+    photo: "https://randomuser.me/api/portraits/men/4.jpg",
+    id: 1,
+    balance: 0,
   },
   {
-    person: "Sakib",
-    photo: "https://randomuser.me/api/portraits/men/7.jpg",
+    person: "Sabila",
+    photo: "https://randomuser.me/api/portraits/women/2.jpg",
+    id: 2,
+    balance: 0,
   },
   {
-    person: "Fahim",
-    photo: "https://randomuser.me/api/portraits/men/7.jpg",
+    person: "Fahia",
+    photo: "https://randomuser.me/api/portraits/women/8.jpg",
+    id: 3,
+    balance: 0,
   },
 ];
 export default function App() {
+  const [person, setPerson] = useState("");
+  const [photo, setPhoto] = useState("");
+  const [datas, setDatas] = useState(data);
+  const [unique, setUnique] = useState(2);
+
+  const handleSubmit = function (e) {
+    e.preventDefault();
+    const newFriend = { person, photo, id: Date.now(), balance: 0 };
+    if (!(newFriend.person && newFriend.photo)) return;
+    setDatas((datas) => [...datas, newFriend]);
+    console.log(datas);
+  };
+  const handleSelect = function (id) {
+    setUnique(id);
+  };
+
   return (
     <div>
-      <Friends data={data}></Friends>
-      <InputFriends></InputFriends>
-      <Display></Display>
+      <Friends datas={datas} handleSelect={handleSelect}></Friends>
+      <InputFriends
+        person={person}
+        setPerson={setPerson}
+        photo={photo}
+        setPhoto={setPhoto}
+        handleSubmit={handleSubmit}
+      ></InputFriends>
+      <Display unique={unique} datas={datas} setDatas={setDatas}></Display>
     </div>
   );
 }

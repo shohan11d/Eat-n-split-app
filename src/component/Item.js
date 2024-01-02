@@ -8,7 +8,7 @@ export function Item({ product, items, handleSelect, handleCross }) {
         onClick={() => handleSelect(product.id)}
       />
       <span>{product.quantity}</span>
-      <span className={product.packed ? "line-through" : "null"}>
+      <span className={product.packed ? "line-through" : ""}>
         {product.describtion}
       </span>
       <button href="#" onClick={() => handleCross(product.id)}>
