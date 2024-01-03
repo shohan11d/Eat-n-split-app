@@ -10,11 +10,10 @@ export function Display({ unique, datas, setDatas }) {
   const xyz = bill - myBill;
 
   function handleSplit() {
-    if (paying === "You") datas.debt = +xyz;
+    if (paying === "You") setDatas(()=> datas.filter((data)=>data !== found))
     if (paying === found.person) datas.gets = +myBill;
-  
-    setDatas()
 
+    
   }
 
   return (
