@@ -12,7 +12,7 @@ const data = [
   },
   {
     person: "Sabila",
-    photo: "https://randomuser.me/api/portraits/women/2.jpg",
+    photo: "httpworking versions://working versionrandomuser.me/api/portraits/women/2.jpg",
     id: 2,
     balance: 0,
   },
