@@ -58,8 +58,8 @@ export default function App() {
   }
 
   return (
-    <div className="flex  w-[700px] mx-auto    my-20">
-      <div>
+    <div className=" grid md:grid-cols-2 max-w-[800px] mx-auto content-center    items-center  my-20">
+      <div className=" grid justify-center ">
         <FriendList
           friends={friends}
           setForm={setForm}
@@ -75,9 +75,11 @@ export default function App() {
           setnewFriendUrl={setnewFriendUrl}
           onSubmit={handleSubmit}
         />
-        <Button onClick={handleShowAddFriend}>
-          {form ? "Close" : "Add Friend"}
-        </Button>
+        <div className="  text-right">
+          <Button onClick={handleShowAddFriend}>
+            {form ? "Close" : "Add Friend"}
+          </Button>
+        </div>
       </div>
 
       <div>
@@ -95,30 +97,38 @@ export default function App() {
   );
 }
 
+function Button({ children, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className="bg-cPrimary rounded-lg text-[13px] self-center hover:bg-cSecondary px-3 py-1 font-medium"
+    >
+      {children}
+    </button>
+  );
+}
+
 function FriendList({ friends, setForm, setSelectedFriend }) {
   return (
-    <div>
-      <ul className="w-[350px]">
-        {friends.map((friend, i) => (
-          <Friend
-            friend={friend}
-            key={i + 2455}
-            setForm={setForm}
-            setSelectedFriend={setSelectedFriend}
-          />
-        ))}
-      </ul>
-    </div>
+    <ul className="max-w-[400px]">
+      {friends.map((friend, i) => (
+        <Friend
+          friend={friend}
+          key={i + 2455}
+          setForm={setForm}
+          setSelectedFriend={setSelectedFriend}
+        />
+      ))}
+    </ul>
   );
 }
 
 function Friend({ friend, setForm, setSelectedFriend }) {
   return (
-    <li className=" flex  justify-around py-4 px-2">
-      {" "}
-      <img className="w-10 rounded-full " src={friend.photo} alt="" />
-      <div className="flex flex-col gap-2 ">
-        <p className="text-md font-bold">{friend.name}</p>
+    <li className="grid grid-cols-[70px_180px_70px] py-4 ">
+      <img className="w-12 h-12 rounded-full " src={friend.photo} alt="" />
+      <div className="flex  flex-col   items-start  ">
+        <p className="text-base font-bold text-[#495057]">{friend.name}</p>
         {friend.balance > 0 && (
           <p className="text-green-600">
             {friend.name} owes me {friend.balance}$
@@ -136,17 +146,6 @@ function Friend({ friend, setForm, setSelectedFriend }) {
   );
 }
 
-function Button({ children, onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      className="bg-amber-500 rounded-lg hover:bg-amber-600 px-3 py-2 self-center"
-    >
-      {children}
-    </button>
-  );
-}
-
 function AddFriend({
   newFriendName,
   setNewFriendName,
@@ -158,19 +157,18 @@ function AddFriend({
   return (
     form && (
       <form
-        className="bg-[#fff4e6] p-5 flex flex-col gap-5"
+        className="bg-[#fff4e6] max-w-[320px] p-5 mb-4 flex flex-col  gap-5"
         onSubmit={onSubmit}
       >
-        <div>
-          <label>Friend name</label>
+        <div className="grid grid-cols-[30%_70%] text-sm gap-y-4">
+          <label>🧑‍🤝‍🧑 Friend name</label>
           <input
             value={newFriendName}
             onChange={(e) => setNewFriendName(e.target.value)}
             type="text"
           />
-        </div>
-        <div>
-          <label>Image URl</label>
+
+          <label>🌆 Image URl</label>
           <input
             type="text"
             value={newFriendUrl}
@@ -198,46 +196,47 @@ function SplitBill({
   function handleSplit(e) {
     e.preventDefault();
     if (!bill || !myBill) return;
-   
 
     onHandleSplit(whoIsPaying === "user" ? friendBill : -myBill);
   }
   return (
     <form
-      className="p-10 m-5 bg-[#fff4e6] flex flex-col gap-5"
+      className="p-5 m-5 bg-[#fff4e6] grid justify-items-start gap-2 grid-cols-2 gap-y-5"
       onSubmit={handleSplit}
     >
-      <h1>Split a Bill with {selectedFriend?.name}</h1>
-      <div>
-        <label>💰 Bill value:</label>
-        <input
-          type="number"
-          value={bill}
-          onChange={(e) => setBill(+e.target.value)}
-        />
-      </div>
-      <div>
-        <label>🧑‍🦲 Your expense:</label>
-        <input
-          type="number"
-          value={myBill}
-          onChange={(e) => setMyBill(+e.target.value)}
-        />
-      </div>
-      <div>
-        <label>👲 {selectedFriend?.name}'s expense:</label>
-        <input type="number" disabled value={friendBill} />
-      </div>
-      <div>
-        <label>🤑 Who is paying the bill:</label>
-        <select
-          value={whoIsPaying}
-          onChange={(e) => setWhoIsPaying(e.target.value)}
-        >
-          <option value="user">You</option>
-          <option value="friend">{selectedFriend?.name}</option>
-        </select>
-      </div>
+      <h1 className="text-xl col-span-2 text-[#495057] font-bold">
+        Split a Bill with {selectedFriend?.name}
+      </h1>
+
+      <label>💰 Bill value:</label>
+      <input
+        className="w-24 py-1 px-4"
+        type="number"
+        value={bill}
+        onChange={(e) => setBill(+e.target.value)}
+      />
+
+      <label>🧑‍🦲 Your expense:</label>
+      <input
+        className="w-24 py-1 px-4"
+        type="number"
+        value={myBill}
+        onChange={(e) => setMyBill(+e.target.value)}
+      />
+
+      <label>👲 {selectedFriend?.name}'s expense:</label>
+      <input className="w-24 py-1 px-4" type="number" disabled value={friendBill} />
+
+      <label>🤑 Who is paying the bill:</label>
+      <select
+        className="w-24 py-1 px-4"
+        value={whoIsPaying}
+        onChange={(e) => setWhoIsPaying(e.target.value)}
+      >
+        <option value="user">You</option>
+        <option value="friend">{selectedFriend?.name}</option>
+      </select>
+
       <Button>Split Bill</Button>
     </form>
   );
