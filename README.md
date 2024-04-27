@@ -2,7 +2,7 @@
 An app for splitting the bill between friends Made with React JS. 
 
 
-## Installation (run or build with vite)
+## Installation 
 ```
 git clone "repo name"
 cd repo
